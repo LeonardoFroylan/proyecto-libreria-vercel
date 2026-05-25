@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservicios - TecnoFroy</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 50px; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #004494; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #004494; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; font-weight: bold; }
+        button:hover { background-color: #003377; }
+        #resultado { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; font-size: 14px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        pre { margin-top: 10px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Crear Orden de Compra</h2>
+        <form id="ordenForm">
+            <input type="number" id="libroId" placeholder="ID del Libro (Ej: 1, 4, 99)" required>
+            <input type="number" id="cantidad" placeholder="Cantidad" required>
+            <input type="text" id="cliente" placeholder="Nombre del Cliente" value="Ingeniero Leonardo" required>
+            <button type="submit">Procesar Orden</button>
+        </form>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        document.getElementById('ordenForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Procesando...";
+            
+            const payload = {
+                libroId: parseInt(document.getElementById('libroId').value),
+                cantidad: parseInt(document.getElementById('cantidad').value),
+                cliente: document.getElementById('cliente').value
+            };
+
+            const divResultado = document.getElementById('resultado');
+            divResultado.style.display = 'block';
+            divResultado.className = '';
+            divResultado.innerHTML = '';
+
+            try {
+                // El frontend se comunica con nuestro microservicio de órdenes
+                const response = await fetch('/api/ordenes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    divResultado.classList.add('success');
+                    divResultado.innerHTML = `<strong>¡Éxito!</strong> ${data.mensaje} <br><pre>${JSON.stringify(data.orden, null, 2)}</pre>`;
+                } else {
+                    divResultado.classList.add('error');
+                    divResultado.innerHTML = `<strong>Compra rechazada:</strong> ${data.error}`;
+                }
+            } catch (error) {
+                divResultado.classList.add('error');
+                divResultado.innerHTML = `<strong>Error de servidor.</strong>`;
+            } finally {
+                btn.innerText = "Procesar Orden";
+            }
+        });
+    </script>
+</body>
+</html>
