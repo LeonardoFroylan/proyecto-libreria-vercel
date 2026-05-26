@@ -1,0 +1,88 @@
+
+:root {
+    --tecno-primary: #0f172a; /* Azul Pizarra: Tecnología, seguridad y autoridad */
+    --tecno-hover: #1e293b;   /* Tono de interacción */
+    --tecno-accent: #3b82f6;  /* Azul vibrante para enfoques */
+    --bg-color: #f8fafc;      /* Fondo limpio para reducir fatiga visual */
+}
+
+body.bg-fondo {
+    background-color: var(--bg-color);
+}
+
+/* =========================================
+   Estilos Corporativos (Sobrescribiendo Bootstrap)
+========================================= */
+.text-tecno {
+    color: var(--tecno-primary);
+}
+
+.bg-tecno {
+    background-color: var(--tecno-primary) !important;
+}
+
+.btn-tecno {
+    background-color: var(--tecno-primary);
+    color: white;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-tecno:hover {
+    background-color: var(--tecno-hover);
+    color: white;
+    transform: translateY(-2px); /* Efecto de elevación 3D */
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.form-control:focus {
+    border-color: var(--tecno-accent);
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15);
+}
+
+.tracking-wide {
+    letter-spacing: 2px;
+}
+
+/* =========================================
+   Ticket de Compra
+========================================= */
+.ticket-wrapper {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ticket-header {
+    background-color: #10b981; /* Verde esmeralda: Éxito y confirmación */
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.ticket-body {
+    padding: 25px;
+    background-color: #fcfcfc;
+    font-family: 'Courier New', Courier, monospace; /* Tipografía de impresora */
+    border-top: 2px dashed #cbd5e1;
+}
+
+.ticket-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.ticket-total {
+    border-top: 2px dashed #94a3b8;
+    margin-top: 20px;
+    padding-top: 15px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-align: right;
+    color: var(--tecno-primary);
+}

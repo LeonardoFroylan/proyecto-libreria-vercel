@@ -19,5 +19,4 @@ app.get('/api/catalogo/:id', (req, res) => {
     return res.status(200).json(libro);
 });
 
-// En lugar de app.listen(), exportamos la app para Vercel
 module.exports = app;
